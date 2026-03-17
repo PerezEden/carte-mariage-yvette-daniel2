@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Invitation - Yvette & Daniel</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,500&family=Montserrat:wght@400;700;800&family=Pinyon+Script&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bleu-principal: #1a3a63;
+            --bleu-accent: #2b579a;
+            --blanc-pure: #ffffff;
+            --beige-fond: #fdfcf7;
+            --transition-reveal: all 1.2s cubic-bezier(0.2, 1, 0.3, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Cormorant Garamond', serif; background-color: var(--beige-fond); color: #333; overflow-x: hidden; }
+
+        /* --- HERO SECTION --- */
+        .hero-parallax {
+            height: 100vh; width: 100%; position: relative; overflow: hidden;
+            display: flex; align-items: center; justify-content: center;
+        }
+
+        .parallax-bg {
+            position: absolute; top: -15%; left: 0; width: 100%; height: 140%;
+            background: url('bisous.jpg') no-repeat center center;
+            background-size: cover; z-index: -1; will-change: transform;
+        }
+
+        .hero-parallax::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.2), rgba(0,0,0,0.4)); z-index: 0;
+        }
+
+        .hero-content { position: relative; z-index: 2; text-align: center; color: white; padding: 0 25px; will-change: transform, opacity; }
+        .hero-content h1 { font-family: 'Pinyon Script', cursive; font-size: clamp(3rem, 13vw, 7.5rem); white-space: nowrap; line-height: 1.1; margin-bottom: 45px; text-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+
+        /* --- COUNTDOWN --- */
+        .countdown { display: flex; gap: 10px; justify-content: center; }
+        .count-box {
+            background: rgba(26, 58, 99, 0.65);
+            padding: 15px 8px; border-radius: 12px; min-width: 75px;
+            backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.25); box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .count-num { font-family: 'Montserrat'; font-weight: 800; font-size: 1.4rem; color: #ffffff; display: block; line-height: 1; }
+        .count-label { font-size: 0.55rem; text-transform: uppercase; color: rgba(255, 255, 255, 0.9); letter-spacing: 2px; margin-top: 6px; display: block; }
+
+        /* --- MUSIC PLAYER --- */
+        .music-player {
+            position: fixed; bottom: 20px; right: 20px; z-index: 100;
+            background: rgba(255, 255, 255, 0.9); padding: 10px 15px;
+            border-radius: 50px; display: flex; align-items: center; gap: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2); cursor: pointer;
+            transition: 0.3s; border: 1px solid var(--bleu-principal);
+        }
+        .bars { display: flex; align-items: flex-end; gap: 2px; height: 15px; }
+        .bar { width: 3px; background: var(--bleu-principal); border-radius: 2px; }
+        .playing .bar { animation: sound 0.5s infinite alternate; }
+        .bar:nth-child(1) { height: 10px; animation-delay: 0.1s; }
+        .bar:nth-child(2) { height: 15px; animation-delay: 0.2s; }
+        .bar:nth-child(3) { height: 8px; animation-delay: 0.3s; }
+        .bar:nth-child(4) { height: 12px; animation-delay: 0.4s; }
+        @keyframes sound { 0% { height: 3px; } 100% { height: 15px; } }
+
+        /* --- REVEAL --- */
+        .reveal { opacity: 0; transform: translateY(50px); transition: var(--transition-reveal); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* --- SECTIONS --- */
+        .section { padding: 60px 20px; text-align: center; position: relative; z-index: 10; background: var(--blanc-pure); }
+        .section.alt { background: var(--beige-fond); }
+        .card-img { width: 100%; max-width: 550px; margin: 0 auto 30px; display: block; border-radius: 2px; box-shadow: 0 20px 50px rgba(0,0,0,0.1); }
+        h2 { font-family: 'Pinyon Script', cursive; font-size: 3.5rem; color: var(--bleu-principal); margin-bottom: 15px; }
+        .details { font-size: 1.4rem; margin-bottom: 25px; line-height: 1.5; }
+        .btn-waze { display: inline-block; padding: 15px 40px; border: 1px solid var(--bleu-principal); color: var(--bleu-principal); text-decoration: none; font-family: 'Montserrat'; font-weight: 700; font-size: 0.75rem; letter-spacing: 2px; transition: 0.4s; }
+        .btn-waze:hover { background: var(--bleu-principal); color: white; transform: translateY(-3px); }
+
+        /* --- RSVP --- */
+        .rsvp-section { padding: 30px 20px 80px; }
+        .rsvp-card { max-width: 600px; margin: 0 auto; padding: 45px 30px; background: white; border-radius: 8px; box-shadow: 0 30px 60px rgba(0,0,0,0.05); }
+        .form-group { margin-bottom: 25px; text-align: left; }
+        .rsvp-column { background: #f9f9f9; padding: 25px; border-radius: 12px; margin-bottom: 25px; border: 1px solid #eee; text-align: left; }
+        label { font-family: 'Montserrat'; font-weight: 700; font-size: 0.65rem; color: var(--bleu-principal); text-transform: uppercase; display: block; margin-bottom: 10px; }
+        input, select, textarea { width: 100%; padding: 12px 0; border: none; border-bottom: 1px solid #ddd; background: transparent; font-size: 1.2rem; outline: none; font-family: inherit; }
+        .submit-btn { width: 100%; padding: 22px; background: var(--bleu-principal); color: white; border: none; font-family: 'Montserrat'; font-weight: 700; letter-spacing: 3px; cursor: pointer; margin-top: 20px; }
+
+        .guest-details { max-height: 0; overflow: hidden; transition: 0.5s ease-out; opacity: 0; }
+        .guest-details.show { max-height: 400px; opacity: 1; margin-top: 20px; }
+
+        .arrow-scroll { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); animation: bounce 2s infinite; cursor: pointer; z-index: 5; }
+        @keyframes bounce { 0%,20%,50%,80%,100%{transform:translateY(0) translateX(-50%)} 40%{transform:translateY(12px) translateX(-50%)} 60%{transform:translateY(6px) translateX(-50%)} }
+    </style>
+</head>
+<body>
+
+<audio id="inviteMusic" loop preload="auto">
+    <source src="YoureBeautiful.mp3" type="audio/mpeg">
+</audio>
+
+<div class="music-player" id="playerBtn" onclick="toggleMusic(event)">
+    <div class="bars" id="musicBars">
+        <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+    </div>
+    <span style="font-family: Montserrat; font-size: 10px; font-weight: 700; color: var(--bleu-principal);">MUSIC</span>
+</div>
+
+<header class="hero-parallax">
+    <div class="parallax-bg" id="bg"></div>
+    <div class="hero-content" id="hero">
+        <h1>Yvette & Daniel</h1>
+        <div class="countdown">
+            <div class="count-box"><span class="count-num" id="d">00</span><span class="count-label">Jours</span></div>
+            <div class="count-box"><span class="count-num" id="h">00</span><span class="count-label">Hrs</span></div>
+            <div class="count-box"><span class="count-num" id="m">00</span><span class="count-label">Min</span></div>
+            <div class="count-box"><span class="count-num" id="s">00</span><span class="count-label">Sec</span></div>
+        </div>
+    </div>
+    <div class="arrow-scroll" onclick="document.querySelector('#next').scrollIntoView()">
+        <svg width="40" height="40" viewBox="0 0 24 24" fill="white"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"/></svg>
+    </div>
+</header>
+
+<div id="next" class="section reveal">
+    <img src="ceremonieCivile.jpg" alt="Mairie" class="card-img">
+    <h2>Cérémonie Civile</h2>
+    <p class="details">Mairie du 19e arrondissement<br>Jeudi 18 Juin 2026 à 14h00</p>
+    <a href="https://waze.com/ul?q=Mairie%20du%2019e%20Arrondissement%20Paris" target="_blank" class="btn-waze">PLAN WAZE</a>
+</div>
+
+<div class="section alt reveal">
+    <img src="houppa.jpg" alt="Houppa" class="card-img">
+    <h2>La Houppa</h2>
+    <p class="details">InterContinental Paris - Le Grand<br>Dimanche 21 Juin 2026, à partir de 17h30</p>
+    <a href="https://waze.com/ul?q=InterContinental%20Paris%20Le%20Grand" target="_blank" class="btn-waze">PLAN WAZE</a>
+</div>
+
+<section class="section rsvp-section reveal">
+    <div class="rsvp-card">
+        <h2 style="font-size: 3rem;">Confirmation</h2>
+        <form id="rsvpForm">
+            <div class="form-group">
+                <label>NOM & PRÉNOM</label>
+                <input type="text" name="nom" id="nom" placeholder="Ex: Famille Levy" required>
+            </div>
+
+            <div class="rsvp-column">
+                <label>CÉRÉMONIE CIVILE (MAIRIE)</label>
+                <select name="mairie_presence" id="mairie_presence" onchange="toggleGuest(this, 'm_det')">
+                    <option value="non">Absent</option>
+                    <option value="oui">Présent</option>
+                </select>
+                <div id="m_det" class="guest-details">
+                    <label style="margin-top:20px">Adultes</label>
+                    <input type="number" name="mairie_adultes" id="mairie_adultes" value="1" min="0">
+                    <label style="margin-top:10px">Enfants (-10 ans)</label>
+                    <input type="number" name="mairie_enfants" id="mairie_enfants" value="0" min="0">
+                </div>
+            </div>
+
+            <div class="rsvp-column">
+                <label>HOUPPA & SOIRÉE</label>
+                <select name="houppa_presence" id="houppa_presence" onchange="toggleGuest(this, 'h_det')">
+                    <option value="non">Absent</option>
+                    <option value="oui">Présent</option>
+                </select>
+                <div id="h_det" class="guest-details">
+                    <label style="margin-top:20px">Adultes</label>
+                    <input type="number" name="houppa_adultes" id="houppa_adultes" value="1" min="0">
+                    <label style="margin-top:10px">Enfants (-10 ans)</label>
+                    <input type="number" name="houppa_enfants" id="houppa_enfants" value="0" min="0">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>UN PETIT MOT ?</label>
+                <textarea name="message" id="message" rows="2" placeholder="Votre message..."></textarea>
+            </div>
+
+            <button type="submit" id="submitBtn" class="submit-btn">ENVOYER LA RÉPONSE</button>
+        </form>
+
+    </div>
+</section>
+
+<script>
+    // URL mise à jour avec ton nouveau script
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbzYw9abFvbX_Qf5XJk49QQnjReYSCyrzVTBEbUKcIBS-nLrFKjkVIklhSrI2WCyCKVQ/exec';
+    const form = document.getElementById('rsvpForm');
+    const btn = document.getElementById('submitBtn');
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+        btn.disabled = true;
+        btn.innerText = "ENVOI EN COURS...";
+
+        // Création d'un objet FormData à partir du formulaire
+        const formData = new FormData(form);
+
+        // LOGIQUE : Si absent, on force les compteurs à 0 pour le Google Sheet
+        if (formData.get('mairie_presence') === 'non') {
+            formData.set('mairie_adultes', '0');
+            formData.set('mairie_enfants', '0');
+        }
+        if (formData.get('houppa_presence') === 'non') {
+            formData.set('houppa_adultes', '0');
+            formData.set('houppa_enfants', '0');
+        }
+
+        // Envoi des données modifiées
+        fetch(scriptURL, {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => {
+                alert('Merci ! Votre réponse a bien été enregistrée.');
+                btn.innerText = "ENVOYÉ !";
+                form.reset();
+                document.getElementById('m_det').classList.remove('show');
+                document.getElementById('h_det').classList.remove('show');
+            })
+            .catch(error => {
+                console.error('Erreur:', error);
+                alert('Erreur technique lors de l\'envoi.');
+                btn.disabled = false;
+                btn.innerText = "RÉESSAYER";
+            });
+    }); 
+    const audio = document.getElementById('inviteMusic');
+    const playerBtn = document.getElementById('playerBtn');
+    let hasPlayed = false;
+
+    function startAudio() {
+        if (!hasPlayed) {
+            audio.play().then(() => {
+                playerBtn.classList.add('playing');
+                hasPlayed = true;
+                ['click', 'touchstart', 'scroll'].forEach(evt =>
+                    window.removeEventListener(evt, startAudio)
+                );
+            }).catch(() => {});
+        }
+    }
+
+    window.addEventListener('click', startAudio);
+    window.addEventListener('touchstart', startAudio);
+    window.addEventListener('scroll', startAudio);
+
+    function toggleMusic(e) {
+        e.stopPropagation();
+        if (audio.paused) {
+            audio.play();
+            playerBtn.classList.add('playing');
+        } else {
+            audio.pause();
+            playerBtn.classList.remove('playing');
+        }
+    }
+
+    window.addEventListener('scroll', () => {
+        const s = window.pageYOffset;
+        const bg = document.getElementById('bg');
+        const hero = document.getElementById('hero');
+        if (bg) bg.style.transform = `translateY(${s * 0.45}px)`;
+        if (hero) {
+            hero.style.transform = `translateY(${s * -0.15}px)`;
+            hero.style.opacity = 1 - (s / 750);
+        }
+        document.querySelectorAll('.reveal').forEach(el => {
+            if(el.getBoundingClientRect().top < window.innerHeight * 0.85) el.classList.add('active');
+        });
+    }, { passive: true });
+
+    const target = new Date("2026-06-21T17:30:00").getTime();
+    function updateTimer() {
+        const diff = target - new Date().getTime();
+        if (diff > 0) {
+            document.getElementById("d").innerText = String(Math.floor(diff / 864e5)).padStart(2,'0');
+            document.getElementById("h").innerText = String(Math.floor((diff % 864e5) / 36e5)).padStart(2,'0');
+            document.getElementById("m").innerText = String(Math.floor((diff % 36e5) / 6e4)).padStart(2,'0');
+            document.getElementById("s").innerText = String(Math.floor((diff % 6e4) / 1e3)).padStart(2,'0');
+        }
+    }
+    updateTimer();
+    setInterval(updateTimer, 1000);
+
+    function toggleGuest(select, id) {
+        const detail = document.getElementById(id);
+        if(select.value === 'oui') detail.classList.add('show');
+        else detail.classList.remove('show');
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Mariage de Yvette & Daniel</title>
+    <meta property="og:title" content="Invitation - Yvette & Daniel">
+    <meta property="og:description" content="Nous serions heureux de vous compter parmi nous pour célébrer notre mariage.">
+
+    <meta property="og:url" content="https://perezeden.github.io/carte-mariage-yvette-daniel/">
+
+    <meta property="og:image" content="https://perezeden.github.io/carte-mariage-yvette-daniel/logoFleur.png">
+
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:width" content="300">
+    <meta property="og:image:height" content="300">
+    <meta property="og:type" content="website">
+    
+    <style>
+        :root {
+            --bleu-royal: #2b579a;
+            --bleu-profond: #1a3a63;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body, html {
+            height: 100vh;
+            width: 100vw;
+            font-family: 'Cormorant Garamond', serif;
+            background-color: #ffffff;
+            overflow: hidden;
+            perspective: 2000px;
+        }
+
+        #global-page-content {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%;
+            height: 110%;
+            z-index: 2;
+            background: url('lasr.jpg') no-repeat center center;
+            background-size: 100% 106%;
+            outline: 1px solid transparent;
+            transform-style: preserve-3d;
+            transform-origin: left center;
+            transition: transform 1.5s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 1s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .page-turn-active {
+            transform: rotateY(-130deg);
+            opacity: 0;
+        }
+
+        .card-wrapper {
+            text-align: center;
+            width: 100%;
+            padding: 0 10%;
+            position: relative;
+            z-index: 4;
+            /* Ajusté pour remonter légèrement l'ensemble */
+            margin-top: -25vh;
+        }
+
+        .photo-container {
+            width: 220px;
+            margin: 0 auto -60px; /* Augmentation de la marge négative pour rapprocher le texte */
+        }
+        .photo-container img {
+            width: 100%;
+            height: auto;
+        }
+
+        h1 {
+            font-family: 'Pinyon Script', cursive;
+            white-space: nowrap;
+            font-size: clamp(1.8rem, 10vw, 3.5rem);
+            color: var(--bleu-royal);
+            line-height: 1;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            display: inline-block;
+            background-color: var(--bleu-royal);
+            color: #fff;
+            text-decoration: none;
+            padding: 16px 35px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(43, 87, 154, 0.3);
+        }
+
+        .btn:hover {
+            background-color: var(--bleu-profond);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+
+<div id="global-page-content">
+    <div class="card-wrapper">
+        <div class="photo-container">
+            <img src="logoFleur.png" alt="Logo">
+        </div>
+
+        <h1>Yvette & Daniel</h1>
+
+        <a href="invitation.html" class="btn" id="open-btn">Voir l'invitation</a>
+    </div>
+</div>
+
+<script>
+    document.getElementById('open-btn').addEventListener('click', function(e) {
+        e.preventDefault();
+        document.getElementById('global-page-content').classList.add('page-turn-active');
+        setTimeout(() => {
+            window.location.href = this.getAttribute('href');
+        }, 1400);
+    });
+</script>
+
+</body>
+</html>
