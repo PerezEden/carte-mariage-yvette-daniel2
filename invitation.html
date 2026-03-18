@@ -140,7 +140,18 @@
     <a href="https://waze.com/ul?q=InterContinental%20Paris%20Le%20Grand" target="_blank" class="btn-waze">PLAN WAZE</a>
 </div>
 
-<section class="section rsvp-section reveal">
+<div class="section reveal">
+    <h2>Chabbat Hatan</h2>
+    <p class="details">
+        <strong>Domaine La Fraternelle</strong><br>
+        195 chemin des Genêts d'Or, Sanary-sur-Mer<br>
+        Du Vendredi 26 au Dimanche 28 Juin 2026<br>
+        <span style="font-size: 1.1rem; font-style: italic; color: var(--bleu-accent);">Chabbat Houkat Balak (11 Tamouz 5786)</span>
+    </p>
+    <a href="https://waze.com/ul?ll=43.1197,5.8197&navigate=yes&q=195%20chemin%20des%20genets%20d'or%20sanary%20sur%20mer" target="_blank" class="btn-waze">PLAN WAZE</a>
+</div>
+
+<section class="section rsvp-section reveal alt">
     <div class="rsvp-card">
         <h2 style="font-size: 3rem;">Confirmation</h2>
         <form id="rsvpForm">
@@ -177,6 +188,18 @@
                 </div>
             </div>
 
+            <div class="rsvp-column">
+                <label>CHABBAT HATAN</label>
+                <select name="chabbat_presence" id="chabbat_presence" onchange="toggleGuest(this, 'c_det')">
+                    <option value="non">Absent</option>
+                    <option value="oui">Présent</option>
+                </select>
+                <div id="c_det" class="guest-details">
+                    <label style="margin-top:20px">Nombre de personnes</label>
+                    <input type="number" name="chabbat_hatan" id="chabbat_hatan" value="1" min="0">
+                </div>
+            </div>
+
             <div class="form-group">
                 <label>UN PETIT MOT ?</label>
                 <textarea name="message" id="message" rows="2" placeholder="Votre message..."></textarea>
@@ -184,13 +207,12 @@
 
             <button type="submit" id="submitBtn" class="submit-btn">ENVOYER LA RÉPONSE</button>
         </form>
-
     </div>
 </section>
 
 <script>
-    // URL mise à jour avec ton nouveau script
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbzYw9abFvbX_Qf5XJk49QQnjReYSCyrzVTBEbUKcIBS-nLrFKjkVIklhSrI2WCyCKVQ/exec';
+    // URL vers ton script Google Apps
+    const scriptURL = 'https://script.google.com/macros/s/AKfycbz0dwR4o_RNZnO8g-MYLzGTYlaOJlIhxXMM5xXlrqAIDVp1sPrH_Re1K8JrDbYcl60/exec';
     const form = document.getElementById('rsvpForm');
     const btn = document.getElementById('submitBtn');
 
@@ -199,10 +221,9 @@
         btn.disabled = true;
         btn.innerText = "ENVOI EN COURS...";
 
-        // Création d'un objet FormData à partir du formulaire
         const formData = new FormData(form);
 
-        // LOGIQUE : Si absent, on force les compteurs à 0 pour le Google Sheet
+        // Mise à zéro des compteurs si "Absent" est choisi
         if (formData.get('mairie_presence') === 'non') {
             formData.set('mairie_adultes', '0');
             formData.set('mairie_enfants', '0');
@@ -211,18 +232,21 @@
             formData.set('houppa_adultes', '0');
             formData.set('houppa_enfants', '0');
         }
+        if (formData.get('chabbat_presence') === 'non') {
+            formData.set('chabbat_hatan', '0');
+        }
 
-        // Envoi des données modifiées
+        // Envoi vers Google Sheets
         fetch(scriptURL, {
             method: 'POST',
-            body: formData
+            body: formData,
+            mode: 'no-cors'
         })
-            .then(response => {
+            .then(() => {
                 alert('Merci ! Votre réponse a bien été enregistrée.');
                 btn.innerText = "ENVOYÉ !";
                 form.reset();
-                document.getElementById('m_det').classList.remove('show');
-                document.getElementById('h_det').classList.remove('show');
+                document.querySelectorAll('.guest-details').forEach(d => d.classList.remove('show'));
             })
             .catch(error => {
                 console.error('Erreur:', error);
@@ -230,7 +254,9 @@
                 btn.disabled = false;
                 btn.innerText = "RÉESSAYER";
             });
-    }); 
+    });
+
+    // --- AUDIO LOGIC ---
     const audio = document.getElementById('inviteMusic');
     const playerBtn = document.getElementById('playerBtn');
     let hasPlayed = false;
@@ -240,9 +266,7 @@
             audio.play().then(() => {
                 playerBtn.classList.add('playing');
                 hasPlayed = true;
-                ['click', 'touchstart', 'scroll'].forEach(evt =>
-                    window.removeEventListener(evt, startAudio)
-                );
+                ['click', 'touchstart', 'scroll'].forEach(evt => window.removeEventListener(evt, startAudio));
             }).catch(() => {});
         }
     }
@@ -262,6 +286,7 @@
         }
     }
 
+    // --- SCROLL REVEAL & PARALLAX ---
     window.addEventListener('scroll', () => {
         const s = window.pageYOffset;
         const bg = document.getElementById('bg');
@@ -276,6 +301,7 @@
         });
     }, { passive: true });
 
+    // --- COUNTDOWN ---
     const target = new Date("2026-06-21T17:30:00").getTime();
     function updateTimer() {
         const diff = target - new Date().getTime();
@@ -289,6 +315,7 @@
     updateTimer();
     setInterval(updateTimer, 1000);
 
+    // --- FORM TOGGLE ---
     function toggleGuest(select, id) {
         const detail = document.getElementById(id);
         if(select.value === 'oui') detail.classList.add('show');
